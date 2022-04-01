@@ -4,7 +4,8 @@ import cv2
 def onChange(value):
     global image, title
 
-    add_value = value - int(image[0][0])
+    # add_value = value - int(image[0][0])
+    add_value = np.uint8(value - int(image[0][0]))
     image = image + add_value
     cv2.imshow(title, image)
 
