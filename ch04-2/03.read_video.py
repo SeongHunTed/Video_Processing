@@ -1,7 +1,7 @@
 import cv2
 from Common.utils import put_string
 
-capture =cv2.VideoCapture("images/video_file.avi")
+capture = cv2.VideoCapture("images/video_file.avi")
 if not capture.isOpend(): raise Exception("동영상 파일 개방 안됨")
 
 frame_rate = capture.get(cv2.CAP_PROP_FPS)

@@ -50,7 +50,7 @@ if color2unchanged1 is None or color2unchanged2 is None:
     raise Exception("영상파일 읽기 에러")
 
 print("16/32비트 영상 행렬 좌표 (10,10) 화소값")
-print(title1, "원소 자료형", type(color2unchanged1[10][10][0]))
+print(title1, "원소 자료형", type(color2unchanged1[10][10][0])) #[][][] 행 열 채널 순
 print(title1, "화소값(3원소)", color2unchanged1[10, 10])
 print(title2, "원소 자료형", type(color2unchanged2[10][10][0]))
 print(title2, "화소값(3원소)", color2unchanged2[10, 10])
