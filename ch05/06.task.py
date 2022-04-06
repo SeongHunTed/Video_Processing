@@ -3,38 +3,45 @@ import cv2
 from Common.utils import print_matInfo
 
 image = cv2.imread("images/ssu.jpg", cv2.IMREAD_COLOR)
-src1 = cv2.imread("images/ssu_logo1.jpg", cv2.IMREAD_COLOR)
-src2 = cv2.imread("images/ssu_logo2.jpg", cv2.IMREAD_COLOR)
-if image is None or src1 is None or src2 is None:
+logo = cv2.imread("images/ssu_logo1.jpg", cv2.IMREAD_COLOR)
+logo2 = cv2.imread("images/ssu_logo2.jpg", cv2.IMREAD_COLOR)
+if image is None or logo is None or logo2 is None:
     raise Exception("영상 파일 읽기 오류")
 
-mask1 = cv2.threshold(src1, 220, 255, cv2.THRESH_BINARY)[1]
-mask1 = cv2.split(mask1)
+cv2.imshow('logo origin', logo)
+logo[0:87, 220:700] = logo2
 
-fg_pass_mask1 = cv2.bitwise_or(mask1[0], mask1[1])
-fg_pass_mask1 = cv2.bitwise_or(mask1[2], fg_pass_mask1) # 전경 통과 마스크
-bg_pass_mask1 = cv2.bitwise_not(fg_pass_mask1)
+masks = cv2.threshold(logo, 220, 255, cv2.THRESH_BINARY)[1]
+masks = cv2.split(masks)
 
-mask2 = cv2.threshold(src2, 220, 255, cv2.THRESH_BINARY)[1]
-mask2 = cv2.split(mask2)
+fg_pass_mask = cv2.bitwise_or(masks[0], masks[1])
+fg_pass_mask = cv2.bitwise_or(masks[2], fg_pass_mask)
+bg_pass_mask = cv2.bitwise_not(fg_pass_mask)
 
-fg_pass_mask2 = cv2.bitwise_or(mask2[0], mask2[1])
-fg_pass_mask2 = cv2.bitwise_or(mask2[2], fg_pass_mask2) # 전경 통과 마스크
-bg_pass_mask2 = cv2.bitwise_not(fg_pass_mask2)
+# print(image.shape) 638, 960, 3
 
-(hLogo, wLogo), (h, w) = src1.shape[:2], src2.shape[:2]
-xl, yl = int((wLogo - w)/2), int((hLogo-h)/2)
-roi = image[yl:yl+h, xl:xl+w]
+(H, W), (h, w) = image.shape[:2], logo.shape[:2]
 
-foreground = cv2.bitwise_and(src1, src1, mask=fg_pass_mask1)
-background = cv2.bitwise_and(src2, src2, mask = fg_pass_mask2)
+x, y = (W-w)//2, (H-h)//6
 
+roi = image[y:y+h, x:x+w]
+
+foreground = cv2.bitwise_and(logo, logo, mask=bg_pass_mask)
+background = cv2.bitwise_and(roi, roi, mask=fg_pass_mask)
 
 dst = cv2.add(background, foreground)
+image[y:y+h, x:x+w] = dst
 
-cv2.imshow('dst', dst)
+
+cv2.imshow('logo2 origin', logo2)
+cv2.imshow('logo1 merged', logo)
+
+
+titles = ['foreground', 'background', 'dst', 'image']
+for title in titles:
+    cv2.imshow(title, eval(title))
+
+cv2.waitKey(0)
 
 
 #슬라이스 연산자 사용해서 로고 두개 합치기
-
-cv2.waitKey(0)
