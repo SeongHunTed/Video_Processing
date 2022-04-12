@@ -8,7 +8,7 @@ image[:] = 200
 title1, title2 = 'Position1', 'Position2'
 
 cv2.namedWindow(title1, cv2.WINDOW_AUTOSIZE)
-cv2.namedWindow(title2)
+cv2.namedWindow(title2, cv2.WINDOW_NORMAL)
 cv2.moveWindow(title1, 150, 150)
 cv2.moveWindow(title2, 400, 50)
 

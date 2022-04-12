@@ -9,6 +9,6 @@ print(arr1 + arr2)
 arr3 = []
 
 for i in range(0, 10):
-    arr3.append(arr1[i] + arr2[i])
+    arr3 = np.add(arr1, arr2)
 
 print(arr3)

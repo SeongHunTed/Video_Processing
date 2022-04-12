@@ -13,6 +13,7 @@ print('b 형태:', b.shape, '\n', b)
 print('c 형태:', c.shape, '\n', c)
 print('d 형태:', d.shape, '\n', d)
 
+# 다차원 객체 1차원 변환 방법 flatten, np.ravel, np.reshape(src, (-1,)), d.reshape(-1,)
 print('다차원 객체 1차원 변환 방법')
 print('a =', a.flatten())
 print('b =', np.ravel(b))

@@ -26,7 +26,7 @@ print(len(arr1[0]))
 
 for i in range(0, 2):
     for j in range(0, 5):
-        arr3.append(arr1[j] + arr2[j])
+        arr3 = np.add(arr1,arr2)
 
 
 print(arr3)
