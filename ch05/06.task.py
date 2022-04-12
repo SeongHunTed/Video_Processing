@@ -26,8 +26,8 @@ x, y = (W-w)//2, (H-h)//6
 
 roi = image[y:y+h, x:x+w]
 
-foreground = cv2.bitwise_and(logo, logo, mask=bg_pass_mask)
-background = cv2.bitwise_and(roi, roi, mask=fg_pass_mask)
+foreground = cv2.bitwise_and(logo, logo, mask=bg_pass_mask) #흰색바탕 검은글씨
+background = cv2.bitwise_and(roi, roi, mask=fg_pass_mask) #검은바탕 흰색글씨
 
 dst = cv2.add(background, foreground)
 image[y:y+h, x:x+w] = dst
