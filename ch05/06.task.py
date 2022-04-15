@@ -14,9 +14,9 @@ logo[0:87, 220:700] = logo2
 masks = cv2.threshold(logo, 220, 255, cv2.THRESH_BINARY)[1]
 masks = cv2.split(masks)
 
-fg_pass_mask = cv2.bitwise_or(masks[0], masks[1])
+fg_pass_mask = cv2.bitwise_or(masks[0], masks[1]) #전면 마스크
 fg_pass_mask = cv2.bitwise_or(masks[2], fg_pass_mask)
-bg_pass_mask = cv2.bitwise_not(fg_pass_mask)
+bg_pass_mask = cv2.bitwise_not(fg_pass_mask) #배경마스크
 
 # print(image.shape) 638, 960, 3
 
