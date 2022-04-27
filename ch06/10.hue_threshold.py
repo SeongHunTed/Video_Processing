@@ -1,6 +1,5 @@
 import numpy as np, cv2
 
-
 def onThreshold(value):
     th[0] = cv2.getTrackbarPos("Hue_th1", "result")
     th[1] = cv2.getTrackbarPos("Hue_th2", "result")
