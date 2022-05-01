@@ -17,7 +17,7 @@ hue = np.copy(HSV_img[:, :, 0])
 th = [50, 100]
 cv2.namedWindow("result")
 cv2.createTrackbar("Hue_th1", "result", th[0], 255, onThreshold)
-cv2.createTrackbar("Hue_th2", "reuslt", th[1], 255, onThreshold)
+cv2.createTrackbar("Hue_th2", "result", th[1], 255, onThreshold)
 onThreshold(th[0])
 cv2.imshow("BGR_img", BGR_img)
 cv2.waitKey(0)
