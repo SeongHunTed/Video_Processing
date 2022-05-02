@@ -19,7 +19,9 @@ def onChange(value):
 
 th = [0, 0]
 image1 = cv2.imread("images/add1.jpg", cv2.IMREAD_GRAYSCALE)
+if image1 is None: raise Exception("Open Image Error")
 image2 = cv2.imread("images/add2.jpg", cv2.IMREAD_GRAYSCALE)
+if image2 is None: raise Exception("Open Image Error")
 
 dst1 = cv2.hconcat([image1, image2])
 dst2 = cv2.hconcat([dst1, image2])
