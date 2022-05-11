@@ -1,4 +1,4 @@
-import cv2
+import cv2, time
 
 
 def print_matInfo(name, image):
@@ -21,3 +21,13 @@ def put_string(frame, text, pt, value, color=(120, 200, 90)):
     cv2.putText(frame, text, shade, font, 0.7, (0, 0, 0), 2)
     cv2.putText(frame, text, pt, font, 0.7, (120, 200, 90), 2)
 
+
+def time_check(func, msg):
+    start_time = time.perf_counter()
+    ret_img = func(image)
+    elapsed = (time.perf_counter() - start_time) * 1000
+    print(msg, "수행시간 : %.2f ms " % elapsed)
+    return ret_img
+
+def contain(p, shape):
+    return 0 <= p[0] < shape[0] and 0 <= p[1] < shape[1]
