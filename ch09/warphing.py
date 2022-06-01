@@ -91,9 +91,6 @@ def warphing(img1, outputs):
     Q1 = np.array(srcQ)
     Q2 = np.array(dstQ)
 
-    # 결과 저장될 이미지 공간 생성
-    morphedIm = np.zeros(img1.shape, np.float32)
-
     # 스텝마다 제어선을 다르게 하기 위해 중간 프레임에 대한 제어선 계산
     # 보간된 제어선을 저장할 interpolated lines 배열 생성
     P = np.array(srcP) + dP
@@ -107,7 +104,6 @@ def warphing(img1, outputs):
             # 픽셀 좌표, 누적 변위, 총 가중치 초기화
             pixel = np.array([w_index, h_index])
             DSUM1 = np.array([0.0, 0.0])
-            DSUM2 = np.array([0.0, 0.0])
             totalweight = 0
 
             # 제어선 수 만큼 반복
@@ -134,36 +130,31 @@ def warphing(img1, outputs):
                 lineWeight = ((norm_QP ** p) / (a + shortestDist)) ** b
 
                 DSUM1 = DSUM1 + (xPrime1 - pixel) * lineWeight
-                DSUM2 = DSUM2 + (xPrime2 - pixel) * lineWeight
                 totalweight += lineWeight
 
             xPrime1 = pixel + DSUM1 / totalweight
-            xPrime2 = pixel + DSUM2 / totalweight
 
             srcX = int(xPrime1[0])
             srcY = int(xPrime1[1])
-            destX = int(xPrime2[0])
-            destY = int(xPrime2[1])
 
             if (srcX in range(0, width) and srcY in range(0, height)):
                 srcRGB = img1[srcY][srcX]
             else:
                 srcRGB = img1[h_index][w_index]
 
-            if (destX in range(0, width) and destY in range(0, height)):
-                destRGB = outputs[destY][destX]
-            else:
-                destRGB = outputs[h_index][w_index]
+            # if (destX in range(0, width) and destY in range(0, height)):
+            #     destRGB = outputs[destY][destX]
+            # else:
+            #     destRGB = outputs[h_index][w_index]
 
             R = srcRGB[0]
             G = srcRGB[1]
             B = srcRGB[2]
 
-            morphedIm[h_index][w_index] = [int(R), int(G), int(B)]
+            outputs[h_index][w_index] = [int(R), int(G), int(B)]
 
-    morphedIm = np.uint8(morphedIm)
-    cv2.imwrite('First drawing' + '.jpg', morphedIm)
-    outputs = morphedIm
+    outputs = np.uint8(outputs)
+    # cv2.imwrite('First drawing' + '.jpg', outputs)
 
 
 def mouse_Input(img1, dst):
